@@ -236,6 +236,9 @@
 # SAVE_PATH_BTN = "cross"             # joystick button to save path
 # RESET_ORIGIN_BTN = "triangle"       # joystick button to press to move car back to origin
 # 
-DONKEY_GYM = True
+DONKEY_GYM = False
 DONKEY_SIM_PATH = "/home/blown302/DonkeySimLinux/donkey_sim.x86_64"
 DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0"
+USE_JOYSTICK_AS_DEFAULT = True
+CAMERA_TYPE = "MOCK"
+PCA9685_I2C_BUSNUM = 1
