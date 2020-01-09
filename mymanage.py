@@ -540,6 +540,15 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
         V.add(ImgArrToJpg(), inputs=['cam/image_array'], outputs=['jpg/bin'])
         V.add(pub, inputs=['jpg/bin'])
 
+
+    from donkeylib.parts.ros import RosOdomSubscriber
+    sub = RosOdomSubscriber('realsensesub', '/camera/odom/sample')
+    V.add(sub, inputs=[], outputs=['pose'])
+
+    from donkeylib.parts.logger import ConsoleLogger
+    V.add(ConsoleLogger(), inputs=['pose'], outputs=[])
+
+
     #run the vehicle for 20 seconds
     V.start(rate_hz=cfg.DRIVE_LOOP_HZ, 
             max_loop_count=cfg.MAX_LOOPS)
