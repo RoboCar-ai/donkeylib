@@ -540,13 +540,20 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
         V.add(ImgArrToJpg(), inputs=['cam/image_array'], outputs=['jpg/bin'])
         V.add(pub, inputs=['jpg/bin'])
 
+    if cfg.ENABLE_ROS_REALSENSE:
+        from donkeylib.parts.ros import RosOdomSubscriber
+        sub = RosOdomSubscriber('realsensesub', '/camera/odom/sample')
+        V.add(sub, inputs=[], outputs=['pose'])
 
-    from donkeylib.parts.ros import RosOdomSubscriber
-    sub = RosOdomSubscriber('realsensesub', '/camera/odom/sample')
-    V.add(sub, inputs=[], outputs=['pose'])
+    if cfg.ENABLE_CONSOLE_LOGGER:
+        from donkeylib.parts.logger import ConsoleLogger
+        V.add(ConsoleLogger(), inputs=['pose'], outputs=[])
 
-    from donkeylib.parts.logger import ConsoleLogger
-    V.add(ConsoleLogger(), inputs=['pose'], outputs=[])
+    from donkeylib.parts.iot import AwsIotCore
+
+    V.add(AwsIotCore(cfg, 'a1pj26jvxq66z4-ats.iot.us-west-2.amazonaws.com', inputs=['pose']), inputs=['pose'], outputs=[],
+          # run_condition='recording'
+          )
 
 
     #run the vehicle for 20 seconds

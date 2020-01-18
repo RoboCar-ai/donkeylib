@@ -242,3 +242,13 @@ DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0"
 USE_JOYSTICK_AS_DEFAULT = True
 CAMERA_TYPE = "MOCK"
 PCA9685_I2C_BUSNUM = 1
+AWS_CLIENT_ID="blown302"
+AWS_IOT_ROOT_CA='/home/blown302/cert/AmazonRootCA1.pem'
+AWS_IOT_KEY='/home/blown302/cert/17fcb5b83c-private.pem.key'
+AWS_IOT_CERT='/home/blown302/cert/17fcb5b83c-certificate.pem.crt'
+ENABLE_ROS_REALSENSE=False
+AWS_IOT_USE_WEBSOCKET=False
+ENABLE_CONSOLE_LOGGER=True
+USE_NETWORKED_JS=False
+CONTROLLER_TYPE='F710'               #(ps3|ps4|xbox|nimbus|wiiu|F710|rc3)
+
