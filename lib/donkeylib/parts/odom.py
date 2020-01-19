@@ -3,6 +3,11 @@ import struct
 from time import sleep
 
 i2c_address = 0x66
+COMMAND_RESET=1
+NULL_I2C_VALUE=0
+
+REGISTER_COMMAND_RESET_DISTANCE=9
+REGISTER_REQ=0
 
 
 def unpack(data, offset=0, limit=4):
@@ -16,14 +21,15 @@ class I2cOdom:
         self.bus = smbus.SMBus(1)
         self.counter = 0
         self.dist = None
+        # Reset total distance to 0
+        self.bus.write_byte_data(i2c_address, REGISTER_COMMAND_RESET_DISTANCE, NULL_I2C_VALUE)
 
     def run(self):
-        d = self.bus.read_i2c_block_data(i2c_address, 0, 8)
+        d = self.bus.read_i2c_block_data(i2c_address, REGISTER_REQ, 8)
         vel = unpack(d)
         total_dist = unpack(d, 4, 8)
         self.counter += 1
         if self.counter % 40 == 0:
-            print('distance:', total_dist)
             self.counter = 0
             self.dist = total_dist
 

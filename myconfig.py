@@ -247,8 +247,11 @@ AWS_IOT_ROOT_CA='/home/blown302/cert/AmazonRootCA1.pem'
 AWS_IOT_KEY='/home/blown302/cert/17fcb5b83c-private.pem.key'
 AWS_IOT_CERT='/home/blown302/cert/17fcb5b83c-certificate.pem.crt'
 ENABLE_ROS_REALSENSE=False
-AWS_IOT_USE_WEBSOCKET=False
+AWS_IOT_USE_WEBSOCKET=True
+AWS_IOT_ENABLE=False
 ENABLE_CONSOLE_LOGGER=True
 USE_NETWORKED_JS=False
-CONTROLLER_TYPE='F710'               #(ps3|ps4|xbox|nimbus|wiiu|F710|rc3)
+CONTROLLER_TYPE='F710'
+STEERING_LEFT_PWM = 500         #pwm value for full left steering
+STEERING_RIGHT_PWM = 280        #pwm value for full right steering             #(ps3|ps4|xbox|nimbus|wiiu|F710|rc3)
 

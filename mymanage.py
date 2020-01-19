@@ -547,13 +547,15 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
 
     if cfg.ENABLE_CONSOLE_LOGGER:
         from donkeylib.parts.logger import ConsoleLogger
-        V.add(ConsoleLogger(), inputs=['pose'], outputs=[])
+        inputs = ['pose', 'odom/vel', 'odom/total_dist']
+        V.add(ConsoleLogger(labels=inputs), inputs=inputs, outputs=[])
 
-    from donkeylib.parts.iot import AwsIotCore
+    if cfg.AWS_IOT_ENABLE:
+        from donkeylib.parts.iot import AwsIotCore
 
-    V.add(AwsIotCore(cfg, 'a1pj26jvxq66z4-ats.iot.us-west-2.amazonaws.com', inputs=['pose']), inputs=['pose'], outputs=[],
+        V.add(AwsIotCore(cfg, 'a1pj26jvxq66z4-ats.iot.us-west-2.amazonaws.com', inputs=['pose']), inputs=['pose'], outputs=[],
           # run_condition='recording'
-          )
+            )
 
 
     #run the vehicle for 20 seconds
