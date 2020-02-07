@@ -1,3 +1,6 @@
+import sys, json
+from prettytable import PrettyTable
+
 
 class ConsoleLogger:
     def __init__(self, interval=20, labels=[]):
@@ -7,6 +10,9 @@ class ConsoleLogger:
 
     def run(self, *args):
         self.count += 1
-        v = zip(self.labels, args)
         if self.count % self.interval == 0:
-            print(dict(v))
+            t = PrettyTable()
+            t.field_names = ['Key', 'Value']
+            for i in range(len(args)):
+                t.add_row([self.labels[i], args[i]])
+            print(t)

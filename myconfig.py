@@ -235,7 +235,9 @@
 # PID_THROTTLE = 0.2                  # constant throttle value during path following
 # SAVE_PATH_BTN = "cross"             # joystick button to save path
 # RESET_ORIGIN_BTN = "triangle"       # joystick button to press to move car back to origin
-# 
+#
+import donkeylib.constants.state as state_props
+
 DONKEY_GYM = False
 DONKEY_SIM_PATH = "/home/blown302/DonkeySimLinux/donkey_sim.x86_64"
 DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0"
@@ -250,8 +252,19 @@ ENABLE_ROS_REALSENSE=False
 AWS_IOT_USE_WEBSOCKET=True
 AWS_IOT_ENABLE=False
 ENABLE_CONSOLE_LOGGER=True
-USE_NETWORKED_JS=False
-CONTROLLER_TYPE='F710'
-STEERING_LEFT_PWM = 500         #pwm value for full left steering
-STEERING_RIGHT_PWM = 280        #pwm value for full right steering             #(ps3|ps4|xbox|nimbus|wiiu|F710|rc3)
+CONSOLE_LOGGER_INTERVAL=10
 
+CONSOLE_LOGGER_PROPERTIES = [
+    state_props.POSE,
+    state_props.ODOM_VELOCITY,
+    state_props.ODOM_TOTAL_DISTANCE,
+    state_props.THROTTLE,
+    state_props.USER_THROTTLE
+]
+
+USE_NETWORKED_JS=False
+CONTROLLER_TYPE='F710'          #(ps3|ps4|xbox|nimbus|wiiu|F710|rc3)
+STEERING_LEFT_PWM = 500         #pwm value for full left steering
+STEERING_RIGHT_PWM = 280        #pwm value for full right steering
+
+JOYSTICK_MAX_THROTTLE = 0.2

@@ -1,0 +1,5 @@
+POSE = 'pose'
+USER_THROTTLE = 'user/throttle'
+THROTTLE = 'throttle'
+ODOM_VELOCITY = 'odom/vel'
+ODOM_TOTAL_DISTANCE = 'odom/total_dist'

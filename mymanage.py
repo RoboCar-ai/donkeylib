@@ -15,6 +15,7 @@ Options:
 """
 import os
 import time
+import donkeylib.constants.state as state_props
 
 from docopt import docopt
 import numpy as np
@@ -413,6 +414,9 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
     from donkeylib.parts.odom import I2cOdom
     V.add(I2cOdom(), inputs=[], outputs=['odom/vel', 'odom/total_dist'])
 
+    from donkeylib.parts.testing import OdomQuality
+    V.add(OdomQuality(), inputs=[state_props.ODOM_VELOCITY])
+
     if isinstance(ctr, JoystickController):
         ctr.set_button_down_trigger(cfg.AI_LAUNCH_ENABLE_BUTTON, aiLauncher.enable_ai_launch)
 
@@ -547,8 +551,9 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
 
     if cfg.ENABLE_CONSOLE_LOGGER:
         from donkeylib.parts.logger import ConsoleLogger
-        inputs = ['pose', 'odom/vel', 'odom/total_dist']
-        V.add(ConsoleLogger(labels=inputs), inputs=inputs, outputs=[])
+        inputs = cfg.CONSOLE_LOGGER_PROPERTIES
+        V.add(ConsoleLogger(cfg.CONSOLE_LOGGER_INTERVAL,labels=inputs), inputs=inputs, outputs=[])
+
 
     if cfg.AWS_IOT_ENABLE:
         from donkeylib.parts.iot import AwsIotCore
@@ -556,6 +561,8 @@ def drive(cfg, model_path=None, use_joystick=False, model_type=None, camera_type
         V.add(AwsIotCore(cfg, 'a1pj26jvxq66z4-ats.iot.us-west-2.amazonaws.com', inputs=['pose']), inputs=['pose'], outputs=[],
           # run_condition='recording'
             )
+
+
 
 
     #run the vehicle for 20 seconds
